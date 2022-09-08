@@ -1,0 +1,134 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .game-board{
+    --rotation-1: -120deg;
+    --rotation-2: -90deg;
+    --rotation-3: -30deg;
+  }
+  
+  body{
+    background: #000;
+    color: #ddd;
+    overflow: hidden;
+    font-family: arial;
+  }
+  
+  .title{
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: .75rem;
+  }
+  
+  .hidden{
+    display: none;
+  }
+  
+  .end-wrapper{
+    display: none;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    font-size: 3rem;
+    top: 0;
+    left: 0;
+    background: rebeccapurple;
+    place-content: center;
+    animation: endgame 1.5s ease-in-out;
+  }
+  
+  .circle{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: .25vmin solid #cacacaca;
+    background: url('https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80');
+    background-size: 175vmin;
+    background-position: center;
+    background-repeat: norepeat;
+    transition: transform .5s ease-in; 
+    cursor: pointer;
+  }
+  
+  .clue{
+    width: 80vmin;
+    height: 80vmin;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url('https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80');
+    background-size: 175vmin;
+    background-position: center;
+    background-repeat: norepeat;
+    border-radius: 50%;
+    display: none;
+    opacity: 90%;
+  }
+  
+  .label-circle-1{
+    width: 80vmin;
+    transform: translate(-50%, -50%) rotate(calc(120deg - calc(var(--rotation-1) + var(--rotation-3)))) ;
+  }
+  
+  .label-circle-2{
+    width: 55vmin;
+    transform: translate(-50%, -50%) rotate(calc(var(--rotation-1) + var(--rotation-2))) ;
+  }
+  
+  .label-circle-3{
+    width: 30vmin;
+    transform: translate(-50%, -50%) rotate(calc(300deg - calc(var(--rotation-2) + var(--rotation-3))));
+  }
+  
+  .hint-label{
+    position: absolute;
+    left: 50%;
+    bottom: .75rem;
+    font-family: arial;
+    cursor: pointer;
+    transform: translateX(-50%);  
+  }
+  
+  .hint-label::after{
+    content:"help me!";  
+  }
+  
+  #circle-1:checked ~ .game-board{
+    --rotation-1: 90deg;
+  }
+  
+  #circle-2:checked ~ .game-board{
+    --rotation-2: 20deg;
+  }
+  
+  #circle-3:checked ~ .game-board{
+    --rotation-3: 30deg;
+  }
+  
+  #circle-1:checked ~ #circle-2:not(:checked) ~ #circle-3:checked ~ .game-board > .end-wrapper {
+    display: grid;
+  }
+  
+  #hint:checked ~.game-board >.clue{
+    display: block;
+  }
+  
+  #hint:checked ~.game-board > .hint-label::after{
+    content:"Back";  
+  }
+  
+  @keyframes endgame{
+    from{
+      opacity: 0;
+    }
+    
+    to{
+      opacity: 1;
+    }
+  }
